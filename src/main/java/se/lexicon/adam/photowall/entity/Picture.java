@@ -18,19 +18,19 @@ public class Picture {
     private LocalDate dateCreated;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    private Category category;
+    private PictureCategory pictureCategory;
 
-    public Picture(int pictureId, String url, String name, Person person, LocalDate dateCreated, Category category) {
-        this(url, name, person, dateCreated, category);
+    public Picture(int pictureId, String url, String name, Person person, LocalDate dateCreated, PictureCategory pictureCategory) {
+        this(url, name, person, dateCreated, pictureCategory);
         this.pictureId = pictureId;
     }
 
-    public Picture(String url, String name, Person person, LocalDate dateCreated, Category category) {
+    public Picture(String url, String name, Person person, LocalDate dateCreated, PictureCategory pictureCategory) {
         this.url = url;
         this.name = name;
         this.person = person;
         this.dateCreated = LocalDate.now();
-        this.category = category;
+        this.pictureCategory = pictureCategory;
     }
 
     public Picture() {
@@ -72,12 +72,12 @@ public class Picture {
         this.dateCreated = dateCreated;
     }
 
-    public Category getCategory() {
-        return category;
+    public PictureCategory getPictureCategory() {
+        return pictureCategory;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setPictureCategory(PictureCategory pictureCategory) {
+        this.pictureCategory = pictureCategory;
     }
 
     @Override
@@ -90,12 +90,12 @@ public class Picture {
                 Objects.equals(name, picture.name) &&
                 Objects.equals(person, picture.person) &&
                 Objects.equals(dateCreated, picture.dateCreated) &&
-                Objects.equals(category, picture.category);
+                Objects.equals(pictureCategory, picture.pictureCategory);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pictureId, url, name, person, dateCreated, category);
+        return Objects.hash(pictureId, url, name, person, dateCreated, pictureCategory);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class Picture {
                 ", name='" + name + '\'' +
                 ", person=" + person +
                 ", dateCreated=" + dateCreated +
-                ", category=" + category +
+                ", category=" + pictureCategory +
                 '}';
     }
 }

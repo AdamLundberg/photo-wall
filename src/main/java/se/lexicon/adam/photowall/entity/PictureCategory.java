@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Category {
+public class PictureCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,16 +17,16 @@ public class Category {
     @OneToMany
     private List<Picture> pictures;
 
-    public Category(String categoryId, String categoryName) {
+    public PictureCategory(String categoryId, String categoryName) {
         this(categoryName);
         this.categoryId = categoryId;
     }
 
-    public Category(String categoryName) {
+    public PictureCategory(String categoryName) {
         this.categoryName = categoryName;
     }
 
-    public Category() {
+    public PictureCategory() {
     }
 
     public String getCategoryId() {
@@ -53,10 +53,10 @@ public class Category {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(categoryId, category.categoryId) &&
-                Objects.equals(categoryName, category.categoryName) &&
-                Objects.equals(pictures, category.pictures);
+        PictureCategory pictureCategory = (PictureCategory) o;
+        return Objects.equals(categoryId, pictureCategory.categoryId) &&
+                Objects.equals(categoryName, pictureCategory.categoryName) &&
+                Objects.equals(pictures, pictureCategory.pictures);
     }
 
     @Override
