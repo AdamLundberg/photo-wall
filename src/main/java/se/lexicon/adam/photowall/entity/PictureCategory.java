@@ -1,5 +1,7 @@
 package se.lexicon.adam.photowall.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -8,37 +10,41 @@ import java.util.Objects;
 public class PictureCategory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String categoryId;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    private String pictureCategoryId;
 
     @Column(unique = true)
-    private String categoryName;
+    private String pictureCategoryName;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private List<Picture> pictures;
 
-    public PictureCategory(String categoryId, String categoryName) {
-        this(categoryName);
-        this.categoryId = categoryId;
+    public PictureCategory(String pictureCategoryId, String pictureCategoryName) {
+        this(pictureCategoryName);
+        this.pictureCategoryId = pictureCategoryId;
     }
 
-    public PictureCategory(String categoryName) {
-        this.categoryName = categoryName;
+    public PictureCategory(String pictureCategoryName) {
+        this.pictureCategoryName = pictureCategoryName;
     }
 
     public PictureCategory() {
     }
 
-    public String getCategoryId() {
-        return categoryId;
+    public String getPictureCategoryId() {
+        return pictureCategoryId;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getPictureCategoryName() {
+        return pictureCategoryName;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setPictureCategoryName(String categoryName) {
+        this.pictureCategoryName = categoryName;
     }
 
     public List<Picture> getPictures() {
@@ -54,21 +60,21 @@ public class PictureCategory {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PictureCategory pictureCategory = (PictureCategory) o;
-        return Objects.equals(categoryId, pictureCategory.categoryId) &&
-                Objects.equals(categoryName, pictureCategory.categoryName) &&
+        return Objects.equals(pictureCategoryId, pictureCategory.pictureCategoryId) &&
+                Objects.equals(pictureCategoryName, pictureCategory.pictureCategoryName) &&
                 Objects.equals(pictures, pictureCategory.pictures);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(categoryId, categoryName, pictures);
+        return Objects.hash(pictureCategoryId, pictureCategoryName, pictures);
     }
 
     @Override
     public String toString() {
         return "Category{" +
-                "categoryId='" + categoryId + '\'' +
-                ", categoryName='" + categoryName + '\'' +
+                "categoryId='" + pictureCategoryId + '\'' +
+                ", categoryName='" + pictureCategoryName + '\'' +
                 ", pictures=" + pictures +
                 '}';
     }

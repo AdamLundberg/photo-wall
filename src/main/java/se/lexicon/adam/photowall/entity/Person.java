@@ -1,5 +1,7 @@
 package se.lexicon.adam.photowall.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -8,8 +10,12 @@ import java.util.Objects;
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int personId;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    private String personId;
     private String firstName;
     private String lastName;
 
@@ -19,7 +25,7 @@ public class Person {
     @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private List<Picture> pictures;
 
-    public Person(int personId, String firstName, String lastName, String email) {
+    public Person(String personId, String firstName, String lastName, String email) {
         this(firstName, lastName, email);
         this.personId = personId;
     }
@@ -33,7 +39,7 @@ public class Person {
     public Person() {
     }
 
-    public int getPersonId() {
+    public String getPersonId() {
         return personId;
     }
 

@@ -1,5 +1,7 @@
 package se.lexicon.adam.photowall.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -8,8 +10,12 @@ import java.util.Objects;
 public class Picture {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int pictureId;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    private String pictureId;
     private String url;
     private String name;
 
@@ -20,7 +26,7 @@ public class Picture {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private PictureCategory pictureCategory;
 
-    public Picture(int pictureId, String url, String name, Person person, LocalDate dateCreated, PictureCategory pictureCategory) {
+    public Picture(String pictureId, String url, String name, Person person, LocalDate dateCreated, PictureCategory pictureCategory) {
         this(url, name, person, dateCreated, pictureCategory);
         this.pictureId = pictureId;
     }
@@ -36,7 +42,7 @@ public class Picture {
     public Picture() {
     }
 
-    public int getPictureId() {
+    public String getPictureId() {
         return pictureId;
     }
 

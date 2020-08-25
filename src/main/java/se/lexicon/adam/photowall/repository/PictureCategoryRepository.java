@@ -6,11 +6,11 @@ import se.lexicon.adam.photowall.entity.PictureCategory;
 import java.util.List;
 import java.util.Optional;
 
-public interface CategoryRepository extends CrudRepository<PictureCategory, String> {
+public interface PictureCategoryRepository extends CrudRepository<PictureCategory, String> {
 
     List<PictureCategory> findAll();
-    Optional<PictureCategory> findByCategoryId(String id);
+    Optional<PictureCategory> findByPictureCategoryId(String id);
     // Do i need findByCategoryName??
-    PictureCategory findByCategoryName(String name);
+    PictureCategory findByPictureCategoryName(String name);
 
 }

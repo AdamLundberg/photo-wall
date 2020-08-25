@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface PictureRepository extends CrudRepository<Picture, String> {
     List<Picture> findAll();
-    Optional<Picture> findByPictureId(int id);
+    Optional<Picture> findByPictureId(String id);
     Optional<Picture> findByName(String name);
     //Need to check if this is right
     Optional<Picture> findByPerson(Person person);
