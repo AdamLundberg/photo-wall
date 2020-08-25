@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface PictureCategoryRepository extends CrudRepository<PictureCategory, String> {
 
-    List<PictureCategory> findAll();
-    Optional<PictureCategory> findByPictureCategoryId(String id);
+    //List<PictureCategory> findAll();
+    //Optional<PictureCategory> findByPictureCategoryId(String id);
     // Do i need findByCategoryName??
-    PictureCategory findByPictureCategoryName(String name);
+    //PictureCategory findByPictureCategoryName(String name);
 
 }

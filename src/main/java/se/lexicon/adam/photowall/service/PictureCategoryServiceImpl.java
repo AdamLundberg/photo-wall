@@ -20,11 +20,12 @@ public class PictureCategoryServiceImpl implements PictureCategoryService{
 
     @Override
     public List<PictureCategory> findAll() {
-        return pictureCategoryRepository.findAll();
+        return (List<PictureCategory>) pictureCategoryRepository.findAll();
     }
 
     @Override
     public Optional<PictureCategory> findByCategoryId(String id) {
-        return pictureCategoryRepository.findByPictureCategoryId(id);
+        //return pictureCategoryRepository.findByPictureCategoryId(id);
+        return pictureCategoryRepository.findById(id);
     }
 }
