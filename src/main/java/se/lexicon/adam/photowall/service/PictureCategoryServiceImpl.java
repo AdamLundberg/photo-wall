@@ -28,4 +28,12 @@ public class PictureCategoryServiceImpl implements PictureCategoryService{
         //return pictureCategoryRepository.findByPictureCategoryId(id);
         return pictureCategoryRepository.findById(id);
     }
+
+    @Override
+    public PictureCategory update(PictureCategory pictureCategory) {
+        if (findByCategoryId(pictureCategory.getPictureCategoryId()).isPresent()) {
+            return pictureCategoryRepository.save(pictureCategory);
+        }
+        return null;
+    }
 }

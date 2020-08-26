@@ -1,5 +1,7 @@
 package se.lexicon.adam.photowall.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -33,6 +35,16 @@ public class PictureCategory {
     }
 
     public PictureCategory() {
+    }
+
+    public void addPicture(Picture picture) {
+        pictures.add(picture);
+        picture.setPictureCategory(this);
+    }
+
+    public void removePicture(Picture picture) {
+        picture.setPictureCategory(null);
+        pictures.remove(picture);
     }
 
     public String getPictureCategoryId() {

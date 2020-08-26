@@ -1,5 +1,8 @@
 package se.lexicon.adam.photowall.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -37,6 +40,16 @@ public class Person {
     }
 
     public Person() {
+    }
+
+    public void addPicture(Picture picture) {
+        pictures.add(picture);
+        picture.setPerson(this);
+    }
+
+    public void removePicture(Picture picture) {
+        picture.setPerson(null);
+        pictures.remove(picture);
     }
 
     public String getPersonId() {

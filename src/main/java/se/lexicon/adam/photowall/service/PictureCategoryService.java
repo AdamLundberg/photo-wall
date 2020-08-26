@@ -9,4 +9,6 @@ public interface PictureCategoryService {
 
     List<PictureCategory> findAll();
     Optional<PictureCategory> findByCategoryId(String id);
+
+    PictureCategory update(PictureCategory pictureCategory);
 }

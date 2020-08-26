@@ -2,14 +2,15 @@ package se.lexicon.adam.photowall.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import se.lexicon.adam.photowall.entity.Person;
+import se.lexicon.adam.photowall.entity.Picture;
 import se.lexicon.adam.photowall.entity.PictureCategory;
 import se.lexicon.adam.photowall.service.PictureCategoryService;
+import se.lexicon.adam.photowall.service.PictureService;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @RestController
@@ -17,10 +18,12 @@ import java.util.Optional;
 public class PictureCategoryController {
 
     private final PictureCategoryService pictureCategoryService;
+    private final PictureService pictureService;
 
     @Autowired
-    public PictureCategoryController(PictureCategoryService pictureCategoryService) {
+    public PictureCategoryController(PictureCategoryService pictureCategoryService, PictureService pictureService) {
         this.pictureCategoryService = pictureCategoryService;
+        this.pictureService = pictureService;
     }
 
     @GetMapping
@@ -36,5 +39,16 @@ public class PictureCategoryController {
 
 
         //return ResponseEntity.ok().body(pictureCategoryService.findByCategoryId(id));
+    }
+
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<PictureCategory> addPicture(@RequestBody Picture picture, @PathVariable("categoryId") String categoryId) {
+        PictureCategory original = pictureCategoryService.findByCategoryId(categoryId).get();
+        original.addPicture(picture);
+
+        pictureService.update(picture);
+        original = pictureCategoryService.update(original);
+
+        return ResponseEntity.ok(original);
     }
 }
