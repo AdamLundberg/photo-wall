@@ -1,6 +1,5 @@
 package se.lexicon.adam.photowall.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -90,9 +89,9 @@ public class Picture {
         return pictureCategory;
     }
 
-    /*public void setPictureCategory(PictureCategory pictureCategory) {
+    public void setPictureCategory(PictureCategory pictureCategory) {
         this.pictureCategory = pictureCategory;
-    }*/
+    }
 
     @Override
     public boolean equals(Object o) {
