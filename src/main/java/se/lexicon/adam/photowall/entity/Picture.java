@@ -29,11 +29,11 @@ public class Picture {
     @JsonIgnore
     private PictureCategory pictureCategory;
 
-    public Picture(String pictureId, String url, String name, Person person, PictureCategory pictureCategory) {
+    /*public Picture(String pictureId, String url, String name, Person person, PictureCategory pictureCategory) {
         this(pictureId, url, name);
         this.person = person;
         this.pictureCategory = pictureCategory;
-    }
+    }*/
 
     public Picture(String pictureId, String url, String name) {
         this(url, name);
@@ -101,14 +101,12 @@ public class Picture {
         return pictureId == picture.pictureId &&
                 Objects.equals(url, picture.url) &&
                 Objects.equals(name, picture.name) &&
-                Objects.equals(person, picture.person) &&
-                Objects.equals(dateCreated, picture.dateCreated) &&
-                Objects.equals(pictureCategory, picture.pictureCategory);
+                Objects.equals(dateCreated, picture.dateCreated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pictureId, url, name, person, dateCreated, pictureCategory);
+        return Objects.hash(pictureId, url, name, dateCreated);
     }
 
     @Override
@@ -117,9 +115,7 @@ public class Picture {
                 "pictureId=" + pictureId +
                 ", url='" + url + '\'' +
                 ", name='" + name + '\'' +
-                ", person=" + person +
                 ", dateCreated=" + dateCreated +
-                ", category=" + pictureCategory +
                 '}';
     }
 }

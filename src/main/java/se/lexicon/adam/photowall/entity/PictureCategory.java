@@ -25,6 +25,11 @@ public class PictureCategory {
     @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private List<Picture> pictures;
 
+    public PictureCategory(String pictureCategoryId, String pictureCategoryName, List<Picture> pictures) {
+        this(pictureCategoryId, pictureCategoryName);
+        this.pictures = pictures;
+    }
+
     public PictureCategory(String pictureCategoryId, String pictureCategoryName) {
         this(pictureCategoryName);
         this.pictureCategoryId = pictureCategoryId;
@@ -63,9 +68,9 @@ public class PictureCategory {
         return pictures;
     }
 
-    public void setPictures(List<Picture> pictures) {
+    /*public void setPictures(List<Picture> pictures) {
         this.pictures = pictures;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

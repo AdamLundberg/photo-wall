@@ -25,6 +25,11 @@ public class Person {
     @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private List<Picture> pictures;
 
+    public Person(String personId, String firstName, String lastName, String email, List<Picture> pictures) {
+        this(personId, firstName, lastName, email);
+        this.pictures = pictures;
+    }
+
     public Person(String personId, String firstName, String lastName, String email) {
         this(firstName, lastName, email);
         this.personId = personId;
@@ -81,9 +86,9 @@ public class Person {
         return pictures;
     }
 
-    public void setPictures(List<Picture> pictures) {
+    /*public void setPictures(List<Picture> pictures) {
         this.pictures = pictures;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
