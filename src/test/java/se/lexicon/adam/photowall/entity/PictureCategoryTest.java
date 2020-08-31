@@ -14,14 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class PictureCategoryTest {
 
-    PictureCategoryRepository pictureCategoryRepository;
     PictureCategory pictureCategory;
     String categoryId;
 
-    @Autowired
-    public PictureCategoryTest(PictureCategoryRepository pictureCategoryRepository) {
-        this.pictureCategoryRepository = pictureCategoryRepository;
-    }
 
     @BeforeEach
     void setUp() {

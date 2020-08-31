@@ -11,12 +11,13 @@ import java.util.Optional;
 @Service
 public class PictureCategoryServiceImpl implements PictureCategoryService{
 
-    private final PictureCategoryRepository pictureCategoryRepository;
-
     @Autowired
+    private PictureCategoryRepository pictureCategoryRepository;
+
+    /*@Autowired
     public PictureCategoryServiceImpl(PictureCategoryRepository pictureCategoryRepository) {
         this.pictureCategoryRepository = pictureCategoryRepository;
-    }
+    }*/
 
     @Override
     public List<PictureCategory> findAll() {

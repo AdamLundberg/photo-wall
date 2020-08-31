@@ -13,16 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class PictureTest {
 
-    PictureRepository pictureRepository;
     Picture picture;
     String pictureId;
     Person person;
     PictureCategory pictureCategory;
-
-    @Autowired
-    public PictureTest(PictureRepository pictureRepository) {
-        this.pictureRepository = pictureRepository;
-    }
 
     @BeforeEach
     void setUp() {

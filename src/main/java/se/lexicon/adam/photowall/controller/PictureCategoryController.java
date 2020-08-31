@@ -3,14 +3,12 @@ package se.lexicon.adam.photowall.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.lexicon.adam.photowall.entity.Person;
 import se.lexicon.adam.photowall.entity.Picture;
 import se.lexicon.adam.photowall.entity.PictureCategory;
 import se.lexicon.adam.photowall.service.PictureCategoryService;
 import se.lexicon.adam.photowall.service.PictureService;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 @RestController

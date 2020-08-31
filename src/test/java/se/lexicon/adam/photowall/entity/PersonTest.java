@@ -16,14 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class PersonTest {
 
-    PersonRepository personRepository;
     Person person;
     String personId;
 
-    @Autowired
-    public PersonTest(PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
 
     @BeforeEach
     void setUp() {
