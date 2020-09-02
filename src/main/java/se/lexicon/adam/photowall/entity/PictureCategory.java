@@ -1,6 +1,7 @@
 package se.lexicon.adam.photowall.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -23,6 +24,7 @@ public class PictureCategory {
     private String pictureCategoryName;
 
     @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Picture> pictures;
 
     public PictureCategory(String pictureCategoryId, String pictureCategoryName, List<Picture> pictures) {

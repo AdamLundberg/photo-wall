@@ -42,7 +42,7 @@ public class PictureCategoryController {
 
     @GetMapping("/picture/{picture}")
     public ResponseEntity<PictureCategory> findByPicture(@PathVariable("picture") Picture picture) {
-        Optional<PictureCategory> optional = pictureCategoryService.findByPicture(picture);
+        Optional<PictureCategory> optional = pictureCategoryService.findByPictures(picture);
 
         return optional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }

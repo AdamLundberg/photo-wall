@@ -11,6 +11,6 @@ public interface PictureCategoryService {
     List<PictureCategory> findAll();
     Optional<PictureCategory> findByCategoryId(String id);
 
-    Optional<PictureCategory> findByPicture(Picture picture);
+    Optional<PictureCategory> findByPictures(Picture picture);
     PictureCategory update(PictureCategory pictureCategory);
 }

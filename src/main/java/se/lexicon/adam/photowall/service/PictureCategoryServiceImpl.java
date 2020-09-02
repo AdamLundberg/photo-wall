@@ -32,8 +32,8 @@ public class PictureCategoryServiceImpl implements PictureCategoryService{
     }
 
     @Override
-    public Optional<PictureCategory> findByPicture(Picture picture) {
-        return pictureCategoryRepository.findByPicture(picture);
+    public Optional<PictureCategory> findByPictures(Picture picture) {
+        return pictureCategoryRepository.findByPictures(picture);
     }
 
     @Override

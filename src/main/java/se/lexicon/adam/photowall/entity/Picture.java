@@ -26,7 +26,6 @@ public class Picture {
     private LocalDate dateCreated;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JsonIgnore
     private PictureCategory pictureCategory;
 
     /*public Picture(String pictureId, String url, String name, Person person, PictureCategory pictureCategory) {
