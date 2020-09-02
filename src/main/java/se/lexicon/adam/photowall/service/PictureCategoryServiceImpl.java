@@ -2,6 +2,7 @@ package se.lexicon.adam.photowall.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.lexicon.adam.photowall.entity.Picture;
 import se.lexicon.adam.photowall.entity.PictureCategory;
 import se.lexicon.adam.photowall.repository.PictureCategoryRepository;
 
@@ -28,6 +29,11 @@ public class PictureCategoryServiceImpl implements PictureCategoryService{
     public Optional<PictureCategory> findByCategoryId(String id) {
         //return pictureCategoryRepository.findByPictureCategoryId(id);
         return pictureCategoryRepository.findById(id);
+    }
+
+    @Override
+    public Optional<PictureCategory> findByPicture(Picture picture) {
+        return pictureCategoryRepository.findByPicture(picture);
     }
 
     @Override

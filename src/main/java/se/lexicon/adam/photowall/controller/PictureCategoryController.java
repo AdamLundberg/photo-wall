@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(path = "api/categories")
 public class PictureCategoryController {
 
@@ -37,6 +38,13 @@ public class PictureCategoryController {
 
 
         //return ResponseEntity.ok().body(pictureCategoryService.findByCategoryId(id));
+    }
+
+    @GetMapping("/picture/{picture}")
+    public ResponseEntity<PictureCategory> findByPicture(@PathVariable("picture") Picture picture) {
+        Optional<PictureCategory> optional = pictureCategoryService.findByPicture(picture);
+
+        return optional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{categoryId}")
