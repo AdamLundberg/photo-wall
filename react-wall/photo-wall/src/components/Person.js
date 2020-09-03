@@ -1,23 +1,18 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { Fragment, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import Context from './context/picture/Context';
+import Loading from './Loading';
 
 const Person = () => {
-  const [persons, setPersons] = useState('');
+  const context = useContext(Context);
+  const { loading, persons, getPersons } = context;
 
   useEffect(() => {
-    const fetchData = async () => {
-      const getPersons = await axios(`http://localhost:8080/api/persons`);
-
-      setPersons(getPersons.data);
-    };
-
-    fetchData();
+    getPersons();
+    // eslint-disable-next-line
   }, []);
 
-  console.log(persons);
-
-  if (persons) {
+  if (!loading) {
     return (
       <Fragment>
         {persons.map((person) => (
@@ -31,7 +26,7 @@ const Person = () => {
       </Fragment>
     );
   } else {
-    return null;
+    return <Loading />;
   }
 };
 

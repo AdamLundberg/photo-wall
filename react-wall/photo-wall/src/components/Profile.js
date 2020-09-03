@@ -1,24 +1,20 @@
 import { useParams } from 'react-router-dom';
-import React, { Fragment, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { Fragment, useEffect, useContext } from 'react';
+import RenderPicture from './RenderPicture';
+import Context from './context/picture/Context';
+import Loading from './Loading';
 
 const Profile = () => {
-  const [person, setPerson] = useState('');
+  const context = useContext(Context);
+  const { loading, person, getPerson } = context;
   let params = useParams();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const getPerson = await axios(
-        `http://localhost:8080/api/persons/` + params.id
-      );
+    getPerson(params.id);
+    // eslint-disable-next-line
+  }, []);
 
-      setPerson(getPerson.data);
-    };
-
-    fetchData();
-  }, [params]);
-
-  if (person) {
+  if (person.personId && !loading) {
     return (
       <Fragment>
         <p>{person.firstName}</p>
@@ -28,7 +24,7 @@ const Profile = () => {
         {person.pictures.length > 0 ? (
           person.pictures.map((pic) => (
             <Fragment key={pic.pictureId}>
-              <img key={pic.pictureId} src={pic.url} alt={pic.name}></img>
+              <RenderPicture {...pic} />
               <p>{pic.pictureCategory.pictureCategoryName}</p>
             </Fragment>
           ))
@@ -38,7 +34,7 @@ const Profile = () => {
       </Fragment>
     );
   } else {
-    return null;
+    return <Loading />;
   }
 };
 

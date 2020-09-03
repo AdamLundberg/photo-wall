@@ -1,0 +1,6 @@
+export const SET_LOADING = 'SET_LOADING';
+export const GET_PICTURES = 'GET_PICTURES';
+export const GET_PICTURE = 'GET_PICTURE';
+export const GET_PERSONS = 'GET_PERSONS';
+export const GET_PERSON = 'GET_PERSON';
+export const GET_PERSONBYPICTURE = 'GET_PERSONBYPICTURE';
