@@ -40,7 +40,9 @@ const Action = (props) => {
         }
       )
         .then((res) => {
-          saveCategory(res);
+          console.log('update');
+          console.log(res);
+          saveCategory(picture.pictureCategoryId, res);
         })
         .catch((error) => {
           console.log(error);
@@ -49,16 +51,12 @@ const Action = (props) => {
       console.log('action savePicture');
       console.log(picture);
 
-      Axios.post(`http://localhost:8080/api/pictures`, picture, {
-        headers: {
-          Accept: '*/*',
-        },
-      })
+      Axios.post(`http://localhost:8080/api/pictures`, picture)
         .then((res) => {
           console.log('RESULT');
-          console.log(res);
-          //saveCategory(res);
-          //addPictureToPerson(personId, res.data);
+          console.log(picture);
+          //saveCategory(picture.pictureCategoryId, res);
+          addPictureToPerson(personId, res, picture.pictureCategoryId);
         })
         .catch((error) => {
           console.log(error);
@@ -94,7 +92,10 @@ const Action = (props) => {
       });
   };
 
-  const addPictureToPerson = (personId, picture) => {
+  const addPictureToPerson = (personId, picture, pictureCategoryId) => {
+    console.log(personId);
+    console.log(picture);
+
     setLoading();
     Axios.put(
       'http://localhost:8080/api/persons/pic/' + personId,
@@ -105,7 +106,9 @@ const Action = (props) => {
         },
       }
     )
-      .then((res) => {})
+      .then((res) => {
+        saveCategory(pictureCategoryId, picture);
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -153,12 +156,13 @@ const Action = (props) => {
       });
   };
 
-  const saveCategory = (picture) => {
-    console.log(picture.data);
+  const saveCategory = (pictureCategoryId, picture) => {
+    console.log(pictureCategoryId);
+    console.log(picture);
     setLoading();
     Axios.put(
-      'http://localhost:8080/api/categories/' + picture.data.pictureCategory,
-      picture,
+      'http://localhost:8080/api/categories/' + pictureCategoryId,
+      picture.data,
       {
         headers: {
           Accept: '*/*',
@@ -167,7 +171,7 @@ const Action = (props) => {
     )
       .then((res) => {
         getCategory(res.data.pictureCategoryId);
-        getPicture(picture.pictureId);
+        getPicture(picture.data.pictureId);
       })
       .catch((error) => {
         console.log(error);

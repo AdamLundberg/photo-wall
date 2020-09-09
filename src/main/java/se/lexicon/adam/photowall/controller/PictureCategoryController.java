@@ -50,6 +50,10 @@ public class PictureCategoryController {
 
     @PutMapping("/{categoryId}")
     public ResponseEntity<PictureCategory> addPicture(@RequestBody Picture picture, @PathVariable("categoryId") String categoryId) {
+
+        System.out.println(categoryId);
+        System.out.println(picture.toString());
+
         PictureCategory updatedCategory = pictureCategoryService.findByCategoryId(categoryId).get();
         Picture originalPicture = pictureService.findByPictureId(picture.getPictureId()).get();
 
