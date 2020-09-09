@@ -23,7 +23,7 @@ public class Picture {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JsonIgnore
     private Person person;
-    private LocalDate dateCreated;
+    private final LocalDate dateCreated;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private PictureCategory pictureCategory;
@@ -40,12 +40,15 @@ public class Picture {
     }
 
     public Picture(String url, String name) {
+        this();
         this.url = url;
         this.name = name;
-        this.dateCreated = LocalDate.now();
+
     }
 
     public Picture() {
+        this.dateCreated = LocalDate.now();
+        this.pictureCategory = null;
     }
 
     public String getPictureId() {

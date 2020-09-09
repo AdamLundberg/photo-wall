@@ -7,6 +7,8 @@ import {
   GET_PERSONS,
   GET_PERSON,
   GET_PERSONBYPICTURE,
+  GET_CATEGORIES,
+  GET_CATEGORY,
   SET_LOADING,
 } from './Types';
 import PictureContext from './Context';
@@ -19,9 +21,50 @@ const Action = (props) => {
     persons: [],
     person: [],
     personByPicture: {},
+    categories: [],
+    category: {},
   };
 
   const [state, dispatch] = useReducer(Reducer, initialState);
+
+  const savePicture = (picture, personId) => {
+    setLoading();
+    if (picture.pictureId != null) {
+      Axios.put(
+        'http://localhost:8080/api/pictures/' + picture.pictureId,
+        picture,
+        {
+          headers: {
+            Accept: '*/*',
+          },
+        }
+      )
+        .then((res) => {
+          saveCategory(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      console.log('action savePicture');
+      console.log(picture);
+
+      Axios.post(`http://localhost:8080/api/pictures`, picture, {
+        headers: {
+          Accept: '*/*',
+        },
+      })
+        .then((res) => {
+          console.log('RESULT');
+          console.log(res);
+          //saveCategory(res);
+          //addPictureToPerson(personId, res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
 
   const getPictures = async () => {
     setLoading();
@@ -46,6 +89,23 @@ const Action = (props) => {
           payload: res.data,
         });
       })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const addPictureToPerson = (personId, picture) => {
+    setLoading();
+    Axios.put(
+      'http://localhost:8080/api/persons/pic/' + personId,
+      picture.data,
+      {
+        headers: {
+          Accept: '*/*',
+        },
+      }
+    )
+      .then((res) => {})
       .catch((error) => {
         console.log(error);
       });
@@ -93,6 +153,55 @@ const Action = (props) => {
       });
   };
 
+  const saveCategory = (picture) => {
+    console.log(picture.data);
+    setLoading();
+    Axios.put(
+      'http://localhost:8080/api/categories/' + picture.data.pictureCategory,
+      picture,
+      {
+        headers: {
+          Accept: '*/*',
+        },
+      }
+    )
+      .then((res) => {
+        getCategory(res.data.pictureCategoryId);
+        getPicture(picture.pictureId);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getCategories = async () => {
+    setLoading();
+    await Axios.get('http://localhost:8080/api/categories')
+      .then((res) => {
+        dispatch({
+          type: GET_CATEGORIES,
+          payload: res.data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getCategory = async (categoryId) => {
+    setLoading();
+    await Axios.get('http://localhost:8080/api/categories/' + categoryId)
+      .then((res) => {
+        dispatch({
+          type: GET_CATEGORY,
+          payload: res.data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const setLoading = () => dispatch({ type: SET_LOADING });
 
   return (
@@ -104,11 +213,17 @@ const Action = (props) => {
         persons: state.persons,
         person: state.person,
         personByPicture: state.personByPicture,
+        categories: state.categories,
+        category: state.category,
+        savePicture,
         getPictures,
         getPicture,
         getPersons,
         getPerson,
         getPersonByPicture,
+        saveCategory,
+        getCategories,
+        getCategory,
       }}
     >
       {props.children}

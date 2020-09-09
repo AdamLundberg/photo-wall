@@ -47,14 +47,22 @@ public class PictureCategoryController {
         return optional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+
     @PutMapping("/{categoryId}")
     public ResponseEntity<PictureCategory> addPicture(@RequestBody Picture picture, @PathVariable("categoryId") String categoryId) {
-        PictureCategory original = pictureCategoryService.findByCategoryId(categoryId).get();
-        original.addPicture(picture);
+        PictureCategory updatedCategory = pictureCategoryService.findByCategoryId(categoryId).get();
+        Picture originalPicture = pictureService.findByPictureId(picture.getPictureId()).get();
 
-        pictureService.update(picture);
-        original = pictureCategoryService.update(original);
+        if (originalPicture.getPictureCategory()!= null) {
+            PictureCategory originalCategory = pictureCategoryService.findByCategoryId(originalPicture.getPictureCategory().getPictureCategoryId()).get();
+            updatedCategory.removePicture(originalPicture);
+        }
 
-        return ResponseEntity.ok(original);
+        updatedCategory.addPicture(originalPicture);
+
+        updatedCategory = pictureCategoryService.update(updatedCategory);
+        pictureService.update(originalPicture);
+
+        return ResponseEntity.ok(updatedCategory);
     }
 }

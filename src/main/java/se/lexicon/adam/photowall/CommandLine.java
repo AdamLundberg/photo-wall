@@ -26,7 +26,7 @@ public class CommandLine implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-       /* pictureCategoryRepository.save(new PictureCategory("Nature"));
+        pictureCategoryRepository.save(new PictureCategory("Nature"));
         pictureCategoryRepository.save(new PictureCategory("Portrait"));
         pictureCategoryRepository.save(new PictureCategory("Cars"));
         pictureCategoryRepository.save(new PictureCategory("Dogs"));
@@ -34,15 +34,8 @@ public class CommandLine implements CommandLineRunner {
         personRepository.save(new Person("Adam", "Lundberg", "a@l.com"));
         personRepository.save(new Person("Robin", "Sandberg", "r@s.com"));
 
-        pictureRepository.save(new Picture( "https://images.unsplash.com/photo-1575425186775-b8de9a427e67?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80", "Pug in hat"));
+        /*pictureRepository.save(new Picture( "https://images.unsplash.com/photo-1575425186775-b8de9a427e67?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80", "Pug in hat"));
         pictureRepository.save(new Picture( "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80", "Pug in glasses"));
-
-       *//* Picture pug1 = pictureRepository.findByNameContainingIgnoreCase("hat").get(0);
-        Person adam = personRepository.findByFirstNameContainingIgnoreCase("adam").get(0);
-
-        adam.addPicture(pug1);
-
-        personRepository.save(adam);
-        System.out.println(pug1);*/
+*/
     }
 }

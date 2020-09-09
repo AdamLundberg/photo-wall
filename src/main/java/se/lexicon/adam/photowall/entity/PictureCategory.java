@@ -23,7 +23,7 @@ public class PictureCategory {
     @Column(unique = true)
     private String pictureCategoryName;
 
-    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "pictureCategory")
     @JsonIgnore
     private List<Picture> pictures;
 

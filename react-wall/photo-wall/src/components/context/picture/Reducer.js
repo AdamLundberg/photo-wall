@@ -5,6 +5,7 @@ import {
   GET_PERSONS,
   GET_PERSON,
   GET_PERSONBYPICTURE,
+  GET_CATEGORIES,
 } from './Types';
 
 export default (state, action) => {
@@ -42,6 +43,12 @@ export default (state, action) => {
       return {
         ...state,
         personByPicture: action.payload,
+        loading: false,
+      };
+    case GET_CATEGORIES:
+      return {
+        ...state,
+        categories: action.payload,
         loading: false,
       };
 

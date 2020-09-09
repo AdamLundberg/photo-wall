@@ -53,6 +53,8 @@ public class PictureController {
 
     @PostMapping
     public ResponseEntity<Picture> create(@RequestBody Picture picture) {
+        System.out.println(picture.toString());
+        System.out.println(pictureService.create(picture).toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(pictureService.create(picture));
     }
 
@@ -62,6 +64,7 @@ public class PictureController {
         if (!updated.getPictureId().equals(id)) return ResponseEntity.notFound().build();
 
         Picture original = pictureService.findByPictureId(id).get();
+        original.setUrl(updated.getUrl());
         original.setName(updated.getName());
 
         original = pictureService.update(original);

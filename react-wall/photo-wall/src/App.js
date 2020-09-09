@@ -4,6 +4,7 @@ import Navbar from './components/navbar/Navbar';
 import Home from './components/Home';
 import Person from './components/Person';
 import Profile from './components/Profile';
+import PictureFrom from './components/PictureForm';
 import Picture from './components/Picture';
 import NotFound from './components/NotFound';
 import './App.css';
@@ -19,7 +20,12 @@ const App = () => {
             <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/person' component={Person} />
-              <Route exact path='/person/:id?' component={Profile} />
+              <Route exact path='/person/:personId?' component={Profile} />
+              <Route
+                exact
+                path='/person/:personId?/:pictureId?'
+                component={PictureFrom}
+              />
               <Route exact path='/picture/:id?' component={Picture} />
               <Route component={NotFound} />
             </Switch>

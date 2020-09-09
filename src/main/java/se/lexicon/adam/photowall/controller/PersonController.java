@@ -45,8 +45,8 @@ public class PersonController {
     }
 
     @GetMapping("/pic/{picture}")
-    public ResponseEntity<Person> findByPicture(@PathVariable("picture") Picture picture) {
-        Optional<Person> optional = personService.findByPictures(picture);
+    public ResponseEntity<Person> findByPicture(@PathVariable("picture") String picture) {
+        Optional<Person> optional = personService.findByPictures(pictureService.findByPictureId(picture).get());
 
         return optional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 
@@ -60,10 +60,16 @@ public class PersonController {
 
     @PutMapping("pic/{personId}")
     public ResponseEntity<Person> addPicture(@RequestBody Picture picture, @PathVariable("personId") String personId) {
-        Person original = personService.findByPersonId(personId).get();
-        original.addPicture(picture);
 
-        pictureService.update(picture);
+        System.out.println("String personId: " + personId);
+
+        Person original = personService.findByPersonId(personId).get();
+
+        Picture updatedPicture = pictureService.findByPictureId(picture.getPictureId()).get();
+
+        original.addPicture(updatedPicture);
+
+        pictureService.update(updatedPicture);
         original = personService.update(original);
 
         return ResponseEntity.ok(original);
