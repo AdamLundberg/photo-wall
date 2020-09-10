@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import se.lexicon.adam.photowall.entity.Person;
 import se.lexicon.adam.photowall.entity.Picture;
 import se.lexicon.adam.photowall.entity.PictureCategory;
+import se.lexicon.adam.photowall.service.PersonService;
 import se.lexicon.adam.photowall.service.PictureService;
 
 import java.util.List;
@@ -18,15 +19,17 @@ import java.util.Optional;
 public class PictureController {
 
     private final PictureService pictureService;
+    private final PersonService personService;
 
     @Autowired
-    public PictureController(PictureService pictureService) {
+    public PictureController(PictureService pictureService, PersonService personService) {
         this.pictureService = pictureService;
+        this.personService = personService;
     }
 
     @GetMapping
     public ResponseEntity<List<Picture>> findAll() {
-        return ResponseEntity.ok().body(pictureService.findAll());
+        return ResponseEntity.ok().body(pictureService.findAllByOrOrderByDateCreatedDesc());
     }
 
     @GetMapping("/{id}")
@@ -70,5 +73,16 @@ public class PictureController {
         original = pictureService.update(original);
 
         return ResponseEntity.ok(original);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePicture(@PathVariable("id") String pictureId) {
+        Picture picture = pictureService.findByPictureId(pictureId).get();
+
+        //Person person = personService.findByPictures(picture).get();
+
+        pictureService.delete(picture);
+
+    return ResponseEntity.noContent().build();
     }
 }

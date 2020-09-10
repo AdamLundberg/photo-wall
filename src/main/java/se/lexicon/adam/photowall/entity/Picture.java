@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -23,7 +24,7 @@ public class Picture {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JsonIgnore
     private Person person;
-    private final LocalDate dateCreated;
+    private final LocalDateTime localDateCreated;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private PictureCategory pictureCategory;
@@ -47,7 +48,7 @@ public class Picture {
     }
 
     public Picture() {
-        this.dateCreated = LocalDate.now();
+        this.localDateCreated = LocalDateTime.now();
         this.pictureCategory = null;
     }
 
@@ -79,8 +80,8 @@ public class Picture {
         this.person = person;
     }
 
-    public LocalDate getDateCreated() {
-        return dateCreated;
+    public LocalDateTime getLocalDateCreated() {
+        return localDateCreated;
     }
 
     /*public void setDateCreated(LocalDate dateCreated) {
@@ -103,12 +104,12 @@ public class Picture {
         return pictureId == picture.pictureId &&
                 Objects.equals(url, picture.url) &&
                 Objects.equals(name, picture.name) &&
-                Objects.equals(dateCreated, picture.dateCreated);
+                Objects.equals(localDateCreated, picture.localDateCreated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pictureId, url, name, dateCreated);
+        return Objects.hash(pictureId, url, name, localDateCreated);
     }
 
     @Override
@@ -117,7 +118,7 @@ public class Picture {
                 "pictureId=" + pictureId +
                 ", url='" + url + '\'' +
                 ", name='" + name + '\'' +
-                ", dateCreated=" + dateCreated +
+                ", dateCreated=" + localDateCreated +
                 '}';
     }
 }

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface PictureService {
 
-    List<Picture> findAll();
+    List<Picture> findAllByOrOrderByDateCreatedDesc();
     Optional<Picture> findByPictureId(String id);
     List<Picture> findByName(String name);
     List<Picture> findByPerson(Person person);

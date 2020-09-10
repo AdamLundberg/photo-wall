@@ -64,6 +64,24 @@ const Action = (props) => {
     }
   };
 
+  const deletePicture = (pictureId) => {
+    console.log(pictureId);
+    Axios.delete(`http://localhost:8080/api/pictures/` + pictureId).then(
+      (res) => {
+        console.log(res);
+      }
+    );
+
+    /* Axios.delete(`http://localhost:8080/api/pictures/`, {
+      headers: {
+        Accept: 
+      },
+      data: pictureId,
+    }).then((res) => {
+      console.log(res);
+    }); */
+  };
+
   const getPictures = async () => {
     setLoading();
     await Axios.get('http://localhost:8080/api/pictures')
@@ -79,6 +97,7 @@ const Action = (props) => {
   };
 
   const getPicture = async (pictureId) => {
+    console.log('getPicture');
     setLoading();
     await Axios.get('http://localhost:8080/api/pictures/' + pictureId)
       .then((res) => {
@@ -170,8 +189,8 @@ const Action = (props) => {
       }
     )
       .then((res) => {
-        getCategory(res.data.pictureCategoryId);
         getPicture(picture.data.pictureId);
+        getCategory(res.data.pictureCategoryId);
       })
       .catch((error) => {
         console.log(error);
@@ -220,6 +239,7 @@ const Action = (props) => {
         categories: state.categories,
         category: state.category,
         savePicture,
+        deletePicture,
         getPictures,
         getPicture,
         getPersons,

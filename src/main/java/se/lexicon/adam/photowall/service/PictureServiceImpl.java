@@ -21,8 +21,8 @@ public class PictureServiceImpl implements PictureService{
     }
 
     @Override
-    public List<Picture> findAll() {
-        return (List<Picture>) pictureRepository.findAll();
+    public List<Picture> findAllByOrOrderByDateCreatedDesc() {
+        return pictureRepository.findAllByOrderByLocalDateCreatedDesc();
     }
 
     @Override

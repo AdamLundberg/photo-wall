@@ -2,9 +2,7 @@ package se.lexicon.adam.photowall.entity;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import se.lexicon.adam.photowall.repository.PictureRepository;
 
 import java.util.ArrayList;
 
@@ -71,7 +69,7 @@ class PictureTest {
 
     @Test
     void getDateCreated() {
-        assertNotNull(picture.getDateCreated());
+        assertNotNull(picture.getLocalDateCreated());
     }
 
     @Test

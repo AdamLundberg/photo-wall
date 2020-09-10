@@ -8,6 +8,7 @@ import se.lexicon.adam.photowall.entity.Picture;
 import java.util.List;
 
 public interface PictureRepository extends CrudRepository<Picture, String> {
+    List<Picture> findAllByOrderByLocalDateCreatedDesc();
     List<Picture> findByNameContainingIgnoreCase(String name);
     List<Picture> findByPerson(Person person);
     List<Picture> findByPictureCategory(PictureCategory pictureCategory);

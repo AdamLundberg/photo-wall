@@ -57,10 +57,10 @@ public class PictureCategoryController {
         PictureCategory updatedCategory = pictureCategoryService.findByCategoryId(categoryId).get();
         Picture originalPicture = pictureService.findByPictureId(picture.getPictureId()).get();
 
-        if (originalPicture.getPictureCategory()!= null) {
+        /*if (originalPicture.getPictureCategory()!= null) {
             PictureCategory originalCategory = pictureCategoryService.findByCategoryId(originalPicture.getPictureCategory().getPictureCategoryId()).get();
             updatedCategory.removePicture(originalPicture);
-        }
+        }*/
 
         updatedCategory.addPicture(originalPicture);
 
