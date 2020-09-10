@@ -22,7 +22,7 @@ public class Person {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "person")
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "person", orphanRemoval = true)
     private List<Picture> pictures;
 
     public Person(String personId, String firstName, String lastName, String email, List<Picture> pictures) {

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import se.lexicon.adam.photowall.entity.Person;
-import se.lexicon.adam.photowall.entity.Picture;
 import se.lexicon.adam.photowall.entity.PictureCategory;
 import se.lexicon.adam.photowall.repository.PersonRepository;
 import se.lexicon.adam.photowall.repository.PictureCategoryRepository;

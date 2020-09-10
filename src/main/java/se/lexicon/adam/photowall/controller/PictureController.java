@@ -79,10 +79,9 @@ public class PictureController {
     public ResponseEntity<Void> deletePicture(@PathVariable("id") String pictureId) {
         Picture picture = pictureService.findByPictureId(pictureId).get();
 
-        //Person person = personService.findByPictures(picture).get();
-
         pictureService.delete(picture);
 
-    return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();
     }
 }
+

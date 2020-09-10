@@ -15,14 +15,19 @@ const Person = () => {
   if (!loading) {
     return (
       <Fragment>
-        {persons.map((person) => (
-          <Link key={person.personId} to={`/person/${person.personId}`}>
-            <div key={person.personId}>
-              <p>{person.firstName}</p>
-              <p>{person.lastName}</p>
-            </div>
-          </Link>
-        ))}
+        <Link to={`/person/profile/newPerson`}>
+          <p>Add person</p>
+        </Link>
+        {persons
+          .sort((a, b) => (a.firstName < b.firstName ? -1 : 1))
+          .map((person) => (
+            <Link key={person.personId} to={`/person/${person.personId}`}>
+              <div key={person.personId}>
+                <p>{person.firstName}</p>
+                <p>{person.lastName}</p>
+              </div>
+            </Link>
+          ))}
       </Fragment>
     );
   } else {

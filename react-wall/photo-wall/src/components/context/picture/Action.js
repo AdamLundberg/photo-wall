@@ -12,6 +12,7 @@ import {
   SET_LOADING,
 } from './Types';
 import PictureContext from './Context';
+import { useHistory } from 'react-router-dom';
 
 const Action = (props) => {
   const initialState = {
@@ -25,38 +26,36 @@ const Action = (props) => {
     category: {},
   };
 
+  const history = useHistory();
+  const goToPage = (path) => {
+    history.push(path);
+  };
+
   const [state, dispatch] = useReducer(Reducer, initialState);
 
   const savePicture = (picture, personId) => {
     setLoading();
+
     if (picture.pictureId != null) {
       Axios.put(
         'http://localhost:8080/api/pictures/' + picture.pictureId,
-        picture,
-        {
-          headers: {
-            Accept: '*/*',
-          },
-        }
+        picture
       )
         .then((res) => {
-          console.log('update');
-          console.log(res);
           saveCategory(picture.pictureCategoryId, res);
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
-      console.log('action savePicture');
-      console.log(picture);
-
       Axios.post(`http://localhost:8080/api/pictures`, picture)
         .then((res) => {
-          console.log('RESULT');
-          console.log(picture);
-          //saveCategory(picture.pictureCategoryId, res);
           addPictureToPerson(personId, res, picture.pictureCategoryId);
+
+          getPerson(personId);
+          getPictures();
+
+          goToPage(`/person/${personId}`);
         })
         .catch((error) => {
           console.log(error);
@@ -64,22 +63,12 @@ const Action = (props) => {
     }
   };
 
-  const deletePicture = (pictureId) => {
-    console.log(pictureId);
+  const deletePicture = (pictureId, personId) => {
     Axios.delete(`http://localhost:8080/api/pictures/` + pictureId).then(
       (res) => {
-        console.log(res);
+        goToPage(`/person/${personId}`);
       }
     );
-
-    /* Axios.delete(`http://localhost:8080/api/pictures/`, {
-      headers: {
-        Accept: 
-      },
-      data: pictureId,
-    }).then((res) => {
-      console.log(res);
-    }); */
   };
 
   const getPictures = async () => {
@@ -97,7 +86,6 @@ const Action = (props) => {
   };
 
   const getPicture = async (pictureId) => {
-    console.log('getPicture');
     setLoading();
     await Axios.get('http://localhost:8080/api/pictures/' + pictureId)
       .then((res) => {
@@ -111,10 +99,38 @@ const Action = (props) => {
       });
   };
 
-  const addPictureToPerson = (personId, picture, pictureCategoryId) => {
-    console.log(personId);
-    console.log(picture);
+  const savePerson = (person) => {
+    setLoading();
+    if (person.personId != null) {
+      Axios.put('http://localhost:8080/api/persons/' + person.personId, person)
+        .then((res) => {
+          getPerson(res.data.personId);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      Axios.post('http://localhost:8080/api/persons', person)
+        .then((res) => {
+          goToPage(`/person`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
 
+  const deletePerson = (personId) => {
+    Axios.delete(`http://localhost:8080/api/persons/` + personId)
+      .then(() => {
+        goToPage(`/person`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const addPictureToPerson = (personId, picture, pictureCategoryId) => {
     setLoading();
     Axios.put(
       'http://localhost:8080/api/persons/pic/' + personId,
@@ -176,8 +192,6 @@ const Action = (props) => {
   };
 
   const saveCategory = (pictureCategoryId, picture) => {
-    console.log(pictureCategoryId);
-    console.log(picture);
     setLoading();
     Axios.put(
       'http://localhost:8080/api/categories/' + pictureCategoryId,
@@ -244,6 +258,8 @@ const Action = (props) => {
         getPicture,
         getPersons,
         getPerson,
+        savePerson,
+        deletePerson,
         getPersonByPicture,
         saveCategory,
         getCategories,

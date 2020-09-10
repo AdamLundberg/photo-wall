@@ -16,26 +16,37 @@ const Profile = () => {
 
   if (person.personId && !loading) {
     return (
-      <Fragment>
+      <Fragment key={person.personId}>
+        <Link to={`/person`}>
+          <p>Back</p>
+        </Link>
         <p>{person.firstName}</p>
         <p>{person.lastName}</p>
         <p>{person.email}</p>
+        <Link to={`/person/profile/${params.personId}`}>
+          <p>Edit person</p>
+        </Link>
         <Link to={`/person/${params.personId}/newPicture`}>
           <p>Add picture</p>
         </Link>
 
         {person.pictures.length > 0 ? (
-          person.pictures.map((pic) => (
-            <Fragment key={pic.pictureId}>
-              <RenderPicture {...pic} />
-              <p>{pic.pictureCategory.pictureCategoryName}</p>
-              <Link to={`/person/${params.personId}/${pic.pictureId}`}>
-                <p>Edit</p>
-              </Link>
-            </Fragment>
-          ))
+          person.pictures
+            .sort(
+              (a, b) =>
+                new Date(b.localDateCreated) - new Date(a.localDateCreated)
+            )
+            .map((pic) => (
+              <Fragment key={pic.pictureId}>
+                <RenderPicture {...pic} />
+                {/* <p>{pic.pictureCategory.pictureCategoryName}</p> */}
+                <Link to={`/person/${params.personId}/${pic.pictureId}`}>
+                  <p>Edit</p>
+                </Link>
+              </Fragment>
+            ))
         ) : (
-          <h1>No pictures posted!</h1>
+          <h1>{person.firstName} have not posted anything yet!</h1>
         )}
       </Fragment>
     );

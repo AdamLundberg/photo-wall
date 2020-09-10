@@ -90,4 +90,13 @@ public class PersonController {
         return ResponseEntity.ok(original);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePerson(@PathVariable("id") String personId) {
+        Person person = personService.findByPersonId(personId).get();
+
+        personService.delete(person);
+
+        return ResponseEntity.noContent().build();
+    }
+
 }

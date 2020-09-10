@@ -9,17 +9,23 @@ import Picture from './components/Picture';
 import NotFound from './components/NotFound';
 import './App.css';
 import Action from './components/context/picture/Action';
+import PersonForm from './components/PersonForm';
 
 const App = () => {
   return (
-    <Action>
-      <Router>
+    <Router>
+      <Action>
         <div className='app'>
           <Navbar />
           <div className='container'>
             <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/person' component={Person} />
+              <Route
+                exact
+                path='/person/profile/:personId?'
+                component={PersonForm}
+              />
               <Route exact path='/person/:personId?' component={Profile} />
               <Route
                 exact
@@ -31,8 +37,8 @@ const App = () => {
             </Switch>
           </div>
         </div>
-      </Router>
-    </Action>
+      </Action>
+    </Router>
   );
 };
 
