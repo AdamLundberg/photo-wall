@@ -51,6 +51,7 @@ public class PictureController {
 
     @GetMapping("category/{category}")
     public ResponseEntity<List<Picture>> findByCategory(@PathVariable("category") PictureCategory pictureCategory) {
+        //Add id instead of entity
         return ResponseEntity.ok().body(pictureService.findByPictureCategory(pictureCategory));
     }
 

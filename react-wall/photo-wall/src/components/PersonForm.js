@@ -3,10 +3,11 @@ import { useParams, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Loading from './Loading';
 import Context from './context/picture/Context';
+import DeleteModal from './DeleteModal';
 
 const PersonForm = () => {
   const context = useContext(Context);
-  const { loading, person, getPerson, savePerson, deletePerson } = context;
+  const { loading, person, getPerson, savePerson } = context;
   let params = useParams();
   let isNew = false;
 
@@ -23,23 +24,38 @@ const PersonForm = () => {
     savePerson(data);
   };
 
-  const deleteSubmit = (personId) => deletePerson(personId);
-
   if (!isNew && !person.personId) return <Loading />;
 
   if (!loading) {
     return (
       <Fragment>
-        {isNew ? (
-          <Link to={`/person`}>
-            <p>Back</p>
-          </Link>
-        ) : (
-          <Link to={`/person/${params.personId}`}>
-            <p>Back</p>
-          </Link>
-        )}
-
+        <nav aria-label='breadcrumb'>
+          <ol className='breadcrumb'>
+            <li className='breadcrumb-item'>
+              <Link to={`/person`}>Person </Link>
+            </li>
+            {isNew ? (
+              <Fragment>
+                <li className='breadcrumb-item active'>
+                  <p>New Person</p>
+                </li>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <li className='breadcrumb-item'>
+                  <Link to={`/person/${params.personId}`}>
+                    <p>
+                      {person.firstName} {person.lastName}
+                    </p>
+                  </Link>
+                </li>
+                <li className='breadcrumb-item active'>
+                  <p>Edit Person</p>
+                </li>
+              </Fragment>
+            )}
+          </ol>
+        </nav>
         <form
           name='personForm'
           onSubmit={handleSubmit(onSubmit)}
@@ -53,42 +69,82 @@ const PersonForm = () => {
               ref={register}
             />
           )}
-          <label htmlFor='firstName'>First name</label>
-          <input
-            type='text'
-            name='firstName'
-            aria-invalid={errors.name ? 'true' : 'false'}
-            defaultValue={isNew ? '' : person.firstName}
-            ref={register({ required: true })}
-          />
-          <label htmlFor='lastName'>First name</label>
-          <input
-            type='text'
-            name='lastName'
-            aria-invalid={errors.name ? 'true' : 'false'}
-            defaultValue={isNew ? '' : person.lastName}
-            ref={register({ required: true })}
-          />
-          <label htmlFor='email'>Email</label>
-          <input
-            type='text'
-            name='email'
-            aria-invalid={errors.name ? 'true' : 'false'}
-            defaultValue={isNew ? '' : person.email}
-            ref={register({ required: true })}
-          />
-          <div>
-            {errors.firstName && (
-              <span role='alert'>First name is required</span>
-            )}
-            {errors.lastName && <span role='alert'>Last name is required</span>}
-            {errors.email && <span role='alert'>Email is required</span>}
-            <button type='submit'>Save</button>
+          <div className='row'>
+            <div className='col'>
+              <label htmlFor='firstName'>First name</label>
+              <input
+                className='form-control'
+                type='text'
+                name='firstName'
+                aria-invalid={errors.name ? 'true' : 'false'}
+                defaultValue={isNew ? '' : person.firstName}
+                ref={register({ required: true })}
+              />
+            </div>
+            <div className='col'>
+              <label htmlFor='lastName'>First name</label>
+              <input
+                className='form-control'
+                type='text'
+                name='lastName'
+                aria-invalid={errors.name ? 'true' : 'false'}
+                defaultValue={isNew ? '' : person.lastName}
+                ref={register({ required: true })}
+              />
+            </div>
+            <div className='col'>
+              <label htmlFor='email'>Email</label>
+              <input
+                className='form-control'
+                type='text'
+                name='email'
+                aria-invalid={errors.name ? 'true' : 'false'}
+                defaultValue={isNew ? '' : person.email}
+                ref={register({ required: true })}
+              />
+            </div>
+          </div>
+
+          <div className='mt-3'>
+            <button className='btn btn-success' type='submit'>
+              Save
+            </button>
+            {!isNew ? (
+              <button
+                className='btn btn-danger float-right'
+                type='button'
+                data-toggle='modal'
+                data-target='#deleteModal'
+              >
+                Delete
+              </button>
+            ) : null}
+          </div>
+          <div className='mt-4'>
+            <div className='mt-4'>
+              {errors.firstName && (
+                <span class='alert alert-danger' role='alert'>
+                  First name is required
+                </span>
+              )}
+            </div>
+            <div className='mt-4'>
+              {errors.lastName && (
+                <span class='alert alert-danger' role='alert'>
+                  Last name is required
+                </span>
+              )}
+            </div>
+            <div className='mt-4'>
+              {errors.email && (
+                <span class='alert alert-danger' role='alert'>
+                  Email is required
+                </span>
+              )}
+            </div>
           </div>
         </form>
-        {!isNew ? (
-          <button onClick={() => deleteSubmit(params.personId)}>Delete</button>
-        ) : null}
+        <DeleteModal {...person} />
       </Fragment>
     );
   } else {

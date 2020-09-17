@@ -17,37 +17,63 @@ const Profile = () => {
   if (person.personId && !loading) {
     return (
       <Fragment key={person.personId}>
-        <Link to={`/person`}>
-          <p>Back</p>
-        </Link>
-        <p>{person.firstName}</p>
-        <p>{person.lastName}</p>
-        <p>{person.email}</p>
-        <Link to={`/person/profile/${params.personId}`}>
-          <p>Edit person</p>
-        </Link>
-        <Link to={`/person/${params.personId}/newPicture`}>
-          <p>Add picture</p>
-        </Link>
+        <nav aria-label='breadcrumb'>
+          <ol className='breadcrumb'>
+            <li className='breadcrumb-item'>
+              <Link to={`/person`}>Person </Link>
+            </li>
+            <li className='breadcrumb-item active'>
+              {person.firstName} {person.lastName}
+            </li>
+          </ol>
+        </nav>
 
-        {person.pictures.length > 0 ? (
-          person.pictures
-            .sort(
-              (a, b) =>
-                new Date(b.localDateCreated) - new Date(a.localDateCreated)
-            )
-            .map((pic) => (
-              <Fragment key={pic.pictureId}>
-                <RenderPicture {...pic} />
-                {/* <p>{pic.pictureCategory.pictureCategoryName}</p> */}
-                <Link to={`/person/${params.personId}/${pic.pictureId}`}>
-                  <p>Edit</p>
-                </Link>
-              </Fragment>
-            ))
-        ) : (
-          <h1>{person.firstName} have not posted anything yet!</h1>
-        )}
+        <div className='mt-3'>
+          <p className='d-inline '>
+            {person.firstName} {person.lastName}
+          </p>
+          <p>Email: {person.email}</p>
+        </div>
+
+        <div className='mt-3'>
+          <Link to={`/person/profile/${params.personId}`}>
+            <button className='btn btn-outline-primary d-inline'>
+              Edit person
+            </button>
+          </Link>
+          <Link to={`/person/${params.personId}/newPicture`}>
+            <button className='btn btn-outline-success d-inline float-right'>
+              Add picture
+            </button>
+          </Link>
+        </div>
+        <div className='card-columns mt-4'>
+          {person.pictures.length > 0 ? (
+            person.pictures
+              .sort(
+                (a, b) =>
+                  new Date(b.localDateCreated) - new Date(a.localDateCreated)
+              )
+              .map((pic) => (
+                <Fragment key={pic.pictureId}>
+                  <div className='card'>
+                    <RenderPicture {...pic} />
+                    <p className='text-center'>{pic.name}</p>
+                    <Link to={`/person/${params.personId}/${pic.pictureId}`}>
+                      <button
+                        type='button'
+                        className='btn btn-outline-primary btn-block'
+                      >
+                        Edit
+                      </button>
+                    </Link>
+                  </div>
+                </Fragment>
+              ))
+          ) : (
+            <h6>{person.firstName} has not posted anything yet!</h6>
+          )}
+        </div>
       </Fragment>
     );
   } else {

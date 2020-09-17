@@ -16,18 +16,27 @@ const Person = () => {
     return (
       <Fragment>
         <Link to={`/person/profile/newPerson`}>
-          <p>Add person</p>
+          <button className='btn btn-outline-success d-inline mt-3'>
+            Add person
+          </button>
         </Link>
-        {persons
-          .sort((a, b) => (a.firstName < b.firstName ? -1 : 1))
-          .map((person) => (
-            <Link key={person.personId} to={`/person/${person.personId}`}>
-              <div key={person.personId}>
-                <p>{person.firstName}</p>
-                <p>{person.lastName}</p>
-              </div>
-            </Link>
-          ))}
+        <div className='list-group mt-3'>
+          {persons
+            .sort((a, b) => (a.firstName < b.firstName ? -1 : 1))
+            .map((person) => (
+              <button
+                type='button'
+                className='list-group-item list-group-item-action'
+                key={person.personId}
+              >
+                <Link key={person.personId} to={`/person/${person.personId}`}>
+                  <p>
+                    {person.firstName} {person.lastName}
+                  </p>
+                </Link>
+              </button>
+            ))}
+        </div>
       </Fragment>
     );
   } else {

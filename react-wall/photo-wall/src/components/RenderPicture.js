@@ -9,7 +9,12 @@ const RenderPicture = (props) => {
 
   return (
     <Fragment>
-      <img key={picture.pictureId} src={picture.url} alt={picture.name} />
+      <img
+        key={picture.pictureId}
+        src={picture.url}
+        alt={picture.name}
+        className='card-img-top'
+      />
     </Fragment>
   );
 };

@@ -132,15 +132,7 @@ const Action = (props) => {
 
   const addPictureToPerson = (personId, picture, pictureCategoryId) => {
     setLoading();
-    Axios.put(
-      'http://localhost:8080/api/persons/pic/' + personId,
-      picture.data,
-      {
-        headers: {
-          Accept: '*/*',
-        },
-      }
-    )
+    Axios.put('http://localhost:8080/api/persons/pic/' + personId, picture.data)
       .then((res) => {
         saveCategory(pictureCategoryId, picture);
       })
@@ -195,12 +187,7 @@ const Action = (props) => {
     setLoading();
     Axios.put(
       'http://localhost:8080/api/categories/' + pictureCategoryId,
-      picture.data,
-      {
-        headers: {
-          Accept: '*/*',
-        },
-      }
+      picture.data
     )
       .then((res) => {
         getPicture(picture.data.pictureId);
