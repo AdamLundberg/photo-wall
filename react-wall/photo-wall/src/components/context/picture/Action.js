@@ -52,10 +52,9 @@ const Action = (props) => {
         .then((res) => {
           addPictureToPerson(personId, res, picture.pictureCategoryId);
 
-          getPerson(personId);
-          getPictures();
-
           goToPage(`/person/${personId}`);
+
+          getPerson(personId);
         })
         .catch((error) => {
           console.log(error);

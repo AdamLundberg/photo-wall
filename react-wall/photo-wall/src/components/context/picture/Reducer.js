@@ -51,12 +51,6 @@ export default (state, action) => {
         categories: action.payload,
         loading: false,
       };
-
-    /* case GET_PICTURESBYPERSON:
-      return {
-        ...state,
-        picturesByPerson: action.payload,
-      }; */
     default:
       return state;
   }
