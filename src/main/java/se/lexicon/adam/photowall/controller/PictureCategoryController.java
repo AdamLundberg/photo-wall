@@ -35,9 +35,6 @@ public class PictureCategoryController {
         Optional<PictureCategory> optional = pictureCategoryService.findByCategoryId(id);
 
         return optional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-
-
-        //return ResponseEntity.ok().body(pictureCategoryService.findByCategoryId(id));
     }
 
     @GetMapping("/picture/{picture}")
@@ -50,17 +47,8 @@ public class PictureCategoryController {
 
     @PutMapping("/{categoryId}")
     public ResponseEntity<PictureCategory> addPicture(@RequestBody Picture picture, @PathVariable("categoryId") String categoryId) {
-
-        System.out.println(categoryId);
-        System.out.println(picture.toString());
-
         PictureCategory updatedCategory = pictureCategoryService.findByCategoryId(categoryId).get();
         Picture originalPicture = pictureService.findByPictureId(picture.getPictureId()).get();
-
-        /*if (originalPicture.getPictureCategory()!= null) {
-            PictureCategory originalCategory = pictureCategoryService.findByCategoryId(originalPicture.getPictureCategory().getPictureCategoryId()).get();
-            updatedCategory.removePicture(originalPicture);
-        }*/
 
         updatedCategory.addPicture(originalPicture);
 

@@ -36,7 +36,6 @@ public class PersonController {
         Optional<Person> optional = personService.findByPersonId(id);
 
         return optional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-        //return ResponseEntity.ok().body(personService.findByPersonId(id));
     }
 
     @GetMapping("/name/{firstName}")
@@ -49,8 +48,6 @@ public class PersonController {
         Optional<Person> optional = personService.findByPictures(pictureService.findByPictureId(picture).get());
 
         return optional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-
-        //return ResponseEntity.ok().body(personService.findByPictures(picture));
     }
 
     @PostMapping
@@ -92,11 +89,11 @@ public class PersonController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePerson(@PathVariable("id") String personId) {
+
         Person person = personService.findByPersonId(personId).get();
 
         personService.delete(person);
 
         return ResponseEntity.noContent().build();
     }
-
 }

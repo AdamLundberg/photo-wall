@@ -15,6 +15,9 @@ import PictureContext from './Context';
 import { useHistory } from 'react-router-dom';
 
 const Action = (props) => {
+  //const localHost = 'http://localhost:8080/api/';
+  const localHost = 'http://192.168.1.54:8080/api/';
+
   const initialState = {
     loading: false,
     pictures: [],
@@ -37,10 +40,7 @@ const Action = (props) => {
     setLoading();
 
     if (picture.pictureId != null) {
-      Axios.put(
-        'http://localhost:8080/api/pictures/' + picture.pictureId,
-        picture
-      )
+      Axios.put(localHost + 'pictures/' + picture.pictureId, picture)
         .then((res) => {
           saveCategory(picture.pictureCategoryId, res);
         })
@@ -48,7 +48,7 @@ const Action = (props) => {
           console.log(error);
         });
     } else {
-      Axios.post(`http://localhost:8080/api/pictures`, picture)
+      Axios.post(localHost + 'pictures', picture)
         .then((res) => {
           addPictureToPerson(personId, res, picture.pictureCategoryId);
 
@@ -63,16 +63,14 @@ const Action = (props) => {
   };
 
   const deletePicture = (pictureId, personId) => {
-    Axios.delete(`http://localhost:8080/api/pictures/` + pictureId).then(
-      (res) => {
-        goToPage(`/person/${personId}`);
-      }
-    );
+    Axios.delete(localHost + 'pictures/' + pictureId).then((res) => {
+      goToPage(`/person/${personId}`);
+    });
   };
 
   const getPictures = async () => {
     setLoading();
-    await Axios.get('http://localhost:8080/api/pictures')
+    await Axios.get(localHost + 'pictures')
       .then((res) => {
         dispatch({
           type: GET_PICTURES,
@@ -86,7 +84,7 @@ const Action = (props) => {
 
   const getPicture = async (pictureId) => {
     setLoading();
-    await Axios.get('http://localhost:8080/api/pictures/' + pictureId)
+    await Axios.get(localHost + 'pictures/' + pictureId)
       .then((res) => {
         dispatch({
           type: GET_PICTURE,
@@ -101,7 +99,7 @@ const Action = (props) => {
   const savePerson = (person) => {
     setLoading();
     if (person.personId != null) {
-      Axios.put('http://localhost:8080/api/persons/' + person.personId, person)
+      Axios.put(localHost + 'persons/' + person.personId, person)
         .then((res) => {
           getPerson(res.data.personId);
         })
@@ -109,7 +107,7 @@ const Action = (props) => {
           console.log(error);
         });
     } else {
-      Axios.post('http://localhost:8080/api/persons', person)
+      Axios.post(localHost + 'persons', person)
         .then((res) => {
           goToPage(`/person`);
         })
@@ -120,7 +118,7 @@ const Action = (props) => {
   };
 
   const deletePerson = (personId) => {
-    Axios.delete(`http://localhost:8080/api/persons/` + personId)
+    Axios.delete(localHost + 'persons/' + personId)
       .then(() => {
         goToPage(`/person`);
       })
@@ -131,7 +129,7 @@ const Action = (props) => {
 
   const addPictureToPerson = (personId, picture, pictureCategoryId) => {
     setLoading();
-    Axios.put('http://localhost:8080/api/persons/pic/' + personId, picture.data)
+    Axios.put(localHost + 'persons/pic/' + personId, picture.data)
       .then((res) => {
         saveCategory(pictureCategoryId, picture);
       })
@@ -142,7 +140,7 @@ const Action = (props) => {
 
   const getPersons = async () => {
     setLoading();
-    await Axios.get('http://localhost:8080/api/persons')
+    await Axios.get(localHost + 'persons')
       .then((res) => {
         dispatch({
           type: GET_PERSONS,
@@ -156,7 +154,7 @@ const Action = (props) => {
 
   const getPerson = async (personId) => {
     setLoading();
-    await Axios.get('http://localhost:8080/api/persons/' + personId)
+    await Axios.get(localHost + 'persons/' + personId)
       .then((res) => {
         dispatch({
           type: GET_PERSON,
@@ -170,7 +168,7 @@ const Action = (props) => {
 
   const getPersonByPicture = async (pictureId) => {
     setLoading();
-    await Axios.get('http://localhost:8080/api/persons/pic/' + pictureId)
+    await Axios.get(localHost + 'persons/pic/' + pictureId)
       .then((res) => {
         dispatch({
           type: GET_PERSONBYPICTURE,
@@ -184,10 +182,7 @@ const Action = (props) => {
 
   const saveCategory = (pictureCategoryId, picture) => {
     setLoading();
-    Axios.put(
-      'http://localhost:8080/api/categories/' + pictureCategoryId,
-      picture.data
-    )
+    Axios.put(localHost + 'categories/' + pictureCategoryId, picture.data)
       .then((res) => {
         getPicture(picture.data.pictureId);
         getCategory(res.data.pictureCategoryId);
@@ -199,7 +194,7 @@ const Action = (props) => {
 
   const getCategories = async () => {
     setLoading();
-    await Axios.get('http://localhost:8080/api/categories')
+    await Axios.get(localHost + 'categories')
       .then((res) => {
         dispatch({
           type: GET_CATEGORIES,
@@ -213,7 +208,7 @@ const Action = (props) => {
 
   const getCategory = async (categoryId) => {
     setLoading();
-    await Axios.get('http://localhost:8080/api/categories/' + categoryId)
+    await Axios.get(localHost + 'categories/' + categoryId)
       .then((res) => {
         dispatch({
           type: GET_CATEGORY,

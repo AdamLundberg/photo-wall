@@ -86,10 +86,6 @@ public class Person {
         return pictures;
     }
 
-    /*public void setPictures(List<Picture> pictures) {
-        this.pictures = pictures;
-    }*/
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
